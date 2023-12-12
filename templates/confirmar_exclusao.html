@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmar Exclusão</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="confirmar-exclusao">
+        {% if produto %}
+            <p>Tem certeza que deseja excluir o produto "<strong>{{ produto.nome }}</strong>"?</p>
+            <form method="POST" action="/excluir/{{ produto.id }}/confirmar">
+                <button type="submit">Sim, Excluir</button>
+            </form>
+            <a href="{{ url_for('listar_produtos') }}">Cancelar</a>
+        {% else %}
+            <p>Produto não encontrado.</p>
+            <a href="{{ url_for('listar_produtos') }}">Voltar para a Lista</a>
+        {% endif %}
+    </div>
+</body>
+</html>

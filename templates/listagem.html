@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listagem de Produtos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Listagem de Produtos</h1>
+
+    <form method="GET" action="/listagem">
+        <label for="search">Buscar Produto:</label>
+        <input type="text" id="search" name="search">
+        <button type="submit">Buscar</button>
+    </form>
+
+    <ul>
+        {% for produto in produtos %}
+            <li>
+                <strong>{{ produto.nome }}</strong> (ID: {{ produto.id }})<br>
+                {{ produto.descricao }}<br>
+                Estoque: {{ "Em Estoque" if produto.estoque else "Fora de Estoque" }}
+
+                <button type="button" onclick="confirmarExclusao({{ produto.id }}, '{{ produto.nome }}')">Excluir</button>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <script>
+        function confirmarExclusao(id, nome) {
+            var confirmacao = confirm('Tem certeza que deseja excluir o produto "' + nome + '"?');
+
+            if (confirmacao) {
+                window.location.href = '/excluir/' + id;
+            }
+        }
+    </script>
+</body>
+</html>
